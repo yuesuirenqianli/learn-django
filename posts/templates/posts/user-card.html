@@ -1,0 +1,18 @@
+<aside class="shadow-sm">
+    <div class="card w-100">
+        {% if request.session.userid %}
+            <div class="card-body">
+                <a href="{% url 'posts:user' request.session.userid %}" class="text-decoration-none">
+                    <h5 class="card-title">{{ request.session.username }}</h5>
+                    <p class="card-text">{{ request.session.desc }}</p>
+                </a>
+
+                <a href="{% url 'posts:create' %}" class="btn btn-outline-success btn-sm w-100">发帖</a>
+            </div>
+        {% else %}
+            <div class="card-body">
+                <a href="{% url 'posts:login' %}" class="btn btn-success btn-sm mb-1 w-100">登录</a>
+            </div>
+        {% endif %}
+    </div>
+</aside>

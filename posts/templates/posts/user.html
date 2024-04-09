@@ -1,0 +1,36 @@
+{% extends './base.html' %}
+
+{% block title %}
+    user
+{% endblock %}
+
+{% block header %}
+    {% include './header.html' %}
+{% endblock %}
+
+{% block content %}
+    <br>
+
+    {% include './user-card.html' %}
+
+    <br>
+    <br>
+
+    {% for post in posts %}
+        <a href="{% url 'posts:detail' post.id %}" class="text-decoration-none">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="text-body-secondary border-bottom border-success pb-1">{{ post.title }}</h5>
+                            <div class="text-dark d-inline-block text-truncate w-100">
+                                {{ post.content }}
+                            </div>
+                            <small class="text-muted">{{ post.date }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}

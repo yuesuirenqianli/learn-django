@@ -1,0 +1,43 @@
+{% extends './base.html' %}
+
+{% block title %}
+    Blog
+{% endblock %}
+
+{% block header %}
+    {% include './header.html' %}
+    <br>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xxl-8">
+        <main>
+            {% for post in posts %}
+                <a href="{% url 'posts:detail' post.id %}" class="text-decoration-none">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between border-bottom border-success pb-2 mb-2">
+                                        <h5>{{ post.title }}</h5>
+                                        <div class="text-bg-warning rounded-2 p-2 fs-6 text-white">{{ post.topic }}</div>
+                                    </div>
+                                    <div class="text-dark d-inline-block text-truncate w-100">
+                                        {{ post.content }}
+                                    </div>
+                                    <small class="text-muted">{{ post.by }}</small>
+                                    <small class="text-muted">{{ post.date }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </main>
+    </div>
+    <div class="col-xxl-4">
+        {% include './user-card.html' %}
+    </div>
+</div>
+{% endblock %}

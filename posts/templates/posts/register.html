@@ -1,0 +1,31 @@
+{% extends './base.html' %}
+
+{% block title %}
+    register
+{% endblock %}
+
+{% block content %}
+    <form class="row g-3" action="/register/" method="post">
+        {% csrf_token %}
+
+        <div class="col-md-6">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" id="username" placeholder="username">
+        </div>
+        <div class="col-md-6">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="password">
+        </div>
+        <div class="col-12">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="email">
+        </div>
+        <div class="col-12">
+            <label for="desc" class="form-label">Desc</label>
+            <input type="text" name="desc" class="form-control" id="desc" placeholder="desc">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Confirm</button>
+        </div>
+    </form>
+{% endblock %}

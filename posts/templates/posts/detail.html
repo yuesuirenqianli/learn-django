@@ -1,0 +1,22 @@
+{% extends './base.html' %}
+
+{% block title %}
+    detail
+{% endblock %}
+
+{% block header %}
+    {% include './header.html' %}
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between border-bottom border-success pb-2 mb-2">
+                <h5>{{ post.title }}</h5>
+                <div class="text-bg-warning rounded-2 p-2 fs-6 text-white">{{ post.topic }}</div>
+            </div>
+            <div class="text-muted">{{ post.content }}</div>
+        </div>
+    </div>
+{% endblock %}

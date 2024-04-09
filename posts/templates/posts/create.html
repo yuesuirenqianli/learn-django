@@ -1,0 +1,35 @@
+{% extends './base.html' %}
+
+{% block title %}
+    create
+{% endblock %}
+
+{% block content %}
+    <form class="row g-3" action="/create/" method="post">
+        {% csrf_token %}
+        <div class="col-12">
+            <label for="title" class="form-label">Title</label>
+            <input name="title" type="text" class="form-control" id="title" placeholder="title">
+        </div>
+
+        <div class="col-md-12">
+            <label for="content" class="form-label">Content</label>
+            <textarea name="content" class="form-control" id="content" placeholder="content"></textarea>
+        </div>
+
+        <div class="col-md-4">
+            <label for="topic" class="form-label">Topic</label>
+            <select name="topic" id="topic" class="form-select">
+                <option selected>Choose...</option>
+                {% for topic in topics %}
+                    <option value="{{ topic.id }}">{{ topic.subject }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </form>
+
+{% endblock %}
