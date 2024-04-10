@@ -19,4 +19,28 @@
             <div class="text-muted">{{ post.content }}</div>
         </div>
     </div>
+
+    <br>
+    <form class="row g-3" action="{% url 'posts:comment' post.id %}" method="post">
+        {% csrf_token %}
+
+        <div class="col-12">
+            <textarea class="form-control" name="content" id="" cols="10" rows="2" placeholder="说点什么吧"></textarea>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Comment</button>
+        </div>
+    </form>
+
+    <br>
+    <ul class="list-group">
+        {% for comment in comments %}
+            <li class="list-group-item">
+                <div>{{ comment.content }}</div>
+                <small class="text-muted">{{ comment.date }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}

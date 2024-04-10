@@ -47,3 +47,10 @@ class Posts(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     topic = models.ForeignKey(Topics, on_delete=models.CASCADE)
     by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Comments(models.Model):
+    content = models.CharField(max_length=255)
+    date = models.DateTimeField(auto_now_add=True)
+    create_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE)

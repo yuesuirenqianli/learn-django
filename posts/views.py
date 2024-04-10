@@ -1,7 +1,10 @@
 import hashlib
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
-from .models import User, Posts, Topics
+from .models import User, Posts, Topics, Comments
+
+from .forms import CommentForm
 
 
 def index(request):
@@ -61,4 +64,18 @@ def user(request, by_id):
 
 def detail(request, id):
     post = Posts.objects.select_related('topic').filter(id=id).first()
-    return render(request, 'posts/detail.html', {'post': post})
+    comments = Comments.objects.filter(post=id).order_by('-date')
+    return render(request, 'posts/detail.html', {'post': post, 'comments': comments})
+
+
+def comment(request, id):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.create_user = User.objects.get(id=request.session['userid'])
+            f.post_id = id
+            f.save()
+        else:
+            print(form.errors)
+    return redirect(reverse('posts:detail', args=[id]))
