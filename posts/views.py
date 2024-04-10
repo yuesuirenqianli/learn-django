@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.http import HttpResponse
 
 from .models import User, Posts, Topics, Comments
 
 from .forms import CommentForm, UserForm
 
-from .utils import get_sha256_hash
+from .utils import get_sha256_hash, gen_random_code
+from .Captcha import Captcha
+
 
 def index(request):
     posts = Posts.objects.select_related('by', 'topic').all().order_by('-date')
@@ -18,6 +21,10 @@ def login(request):
     if username and password:
         has_user = User.objects.filter(username=username).first()
         has_pass = get_sha256_hash(password) == has_user.password
+
+        if request.session['captcha'].lower() != request.POST.get('captcha').lower():
+            return render(request, 'posts/login.html', )
+
         if has_pass:
             request.session['userid'] = has_user.id
             request.session['username'] = has_user.username
@@ -77,3 +84,11 @@ def comment(request, id):
         else:
             print(form.errors)
     return redirect(reverse('posts:detail', args=[id]))
+
+
+def get_captcha(request):
+    """验证码"""
+    captcha_text = gen_random_code()
+    request.session['captcha'] = captcha_text
+    image_data = Captcha.instance().generate(captcha_text)
+    return HttpResponse(image_data, content_type='image/png')

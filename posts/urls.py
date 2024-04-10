@@ -13,7 +13,8 @@ urlpatterns = [
     path('create/', views.create, name='create'),
     path('user/<int:by_id>', views.user, name='user'),
     path('detail/<int:id>', views.detail, name='detail'),
-    path('comment/<int:id>', views.comment, name='comment')
+    path('comment/<int:id>', views.comment, name='comment'),
+    path('get_captcha', views.get_captcha, name='get_captcha')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

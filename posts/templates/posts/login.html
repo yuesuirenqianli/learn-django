@@ -15,7 +15,13 @@
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1" name="password">
         </div>
-
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="captcha">
+            <span class="input-group-text" id="basic-addon2">
+                <img src="{% url 'posts:get_captcha' %}" alt="captcha">
+            </span>
+        </div>
+        <div>{{ request.session.captcha }}</div>
         <a href="{% url 'posts:register' %}" class="text-success">前往注册</a>
         <br>
         <br>
