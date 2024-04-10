@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <form class="row g-3" action="/register/" method="post">
+    <form class="row g-3" action="/register/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         <div class="col-md-6">
@@ -23,6 +23,9 @@
         <div class="col-12">
             <label for="desc" class="form-label">Desc</label>
             <input type="text" name="desc" class="form-control" id="desc" placeholder="desc">
+        </div>
+        <div class="col-12">
+            <input class="form-control" name="avatar" type="file" accept=".png, .jpg, .jpeg">
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-success">Confirm</button>

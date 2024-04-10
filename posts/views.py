@@ -1,11 +1,11 @@
-import hashlib
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import User, Posts, Topics, Comments
 
-from .forms import CommentForm
+from .forms import CommentForm, UserForm
 
+from .utils import get_sha256_hash
 
 def index(request):
     posts = Posts.objects.select_related('by', 'topic').all().order_by('-date')
@@ -17,10 +17,11 @@ def login(request):
     password = request.POST.get('password', None)
     if username and password:
         has_user = User.objects.filter(username=username).first()
-        has_pass = hashlib.sha256(password.encode()).hexdigest() == has_user.password
+        has_pass = get_sha256_hash(password) == has_user.password
         if has_pass:
             request.session['userid'] = has_user.id
             request.session['username'] = has_user.username
+            request.session['avatar'] = has_user.avatar.url
             return redirect('/')
 
     return render(request, 'posts/login.html', )
@@ -28,19 +29,16 @@ def login(request):
 
 def register(request):
     if request.method == 'POST':
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-        email = request.POST.get('email', None)
-        desc = request.POST.get('desc', None)
-        if username and password:
-            User.objects.create(
-                username=username,
-                password=hashlib.sha256(password.encode()).hexdigest(),
-                email=email,
-                desc=desc
-            )
+        form = UserForm(request.POST, request.FILES)
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.password = get_sha256_hash(form.cleaned_data['password'])
+            if 'avatar' in request.FILES:
+                f.avatar = request.FILES['avatar']
+            f.save()
             return redirect('/login')
-
+        else:
+            print(form.errors)
     return render(request, 'posts/register.html',)
 
 

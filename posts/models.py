@@ -6,7 +6,7 @@ class User(models.Model):
     password = models.CharField(max_length=255)
     email = models.EmailField()
     level = models.IntegerField(default=0)
-    avatar = models.ImageField(upload_to='')
+    avatar = models.ImageField(upload_to='avatar/%Y%m%d/', blank=True)
     desc = models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
 

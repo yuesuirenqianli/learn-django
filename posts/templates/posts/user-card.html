@@ -3,6 +3,9 @@
         {% if request.session.userid %}
             <div class="card-body">
                 <a href="{% url 'posts:user' request.session.userid %}" class="text-decoration-none">
+                    <div>
+                        <img src="{{ request.session.avatar }}" alt="avatar" class="w-25 rounded-5">
+                    </div>
                     <h5 class="card-title">{{ request.session.username }}</h5>
                     <p class="card-text">{{ request.session.desc }}</p>
                 </a>
