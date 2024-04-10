@@ -128,3 +128,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+# 配置会话的超时时间为1天（86400秒）
+SESSION_COOKIE_AGE = 86400
+
+# 设置为True在关闭浏览器窗口时session就过期
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# 配置将会话对象放到缓存中存储
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
